@@ -6,7 +6,7 @@ let GrassEaterArr = []
 let PredatorArr = []
 let EaterArr = []
 let HumanArr = []
-
+// HI
 function setup() {
     MatrixGenerator()
     createCanvas(side * matrix[0].length, side * matrix.length);

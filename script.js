@@ -1,3 +1,9 @@
+let Grass = require("./grass");
+let GrassEater = require("./grasseater");
+let Predator = require("./predator");
+let Eater = require("./eater");
+let Human = require("./human");
+
 var matrix = [];
 let side = 20
 let GrassArr = []
@@ -6,11 +12,16 @@ let PredatorArr = []
 let EaterArr = []
 let HumanArr = []
 const sideCount = 16;
-// HI
+
+
 function setup() {
     matrixG(sideCount)
     Generation(30, 1);
     Generation(10, 2);
+    Generation(7, 3);
+    Generation(10, 4);
+    Generation(10, 5);
+
     createCanvas(side * matrix[0].length, side * matrix.length);
     background('#acacac');
     frameRate(2)
@@ -19,13 +30,12 @@ function setup() {
 
 
 
-function matrixG(a)
-{
-    for(let i = 0; i<a;i++){
+function matrixG(a) {
+    for (let i = 0; i < a; i++) {
         matrix.push([])
-        for(let j = 0; j<a;j++){
+        for (let j = 0; j < a; j++) {
             matrix[i].push(0)
-            
+
         }
     }
 }
@@ -33,8 +43,8 @@ function matrixG(a)
 function Generation(count, character) {
     let p = 0;
     while (p < count) {
-        let k = Math.floor(random(0, sideCount ))
-        let l = Math.floor(random(0, sideCount ))
+        let k = Math.floor(random(0, sideCount))
+        let l = Math.floor(random(0, sideCount))
         if (matrix[k][l] == 0) {
             matrix[k][l] = character
         }
@@ -109,9 +119,9 @@ function draw() {
     for (let i = 0; i < GrassEaterArr.length; i++) {
         GrassEaterArr[i].eat()
     }
-    // for (let i = 0; i < PredatorArr.length; i++) {
-    //     PredatorArr[i].eat()
-    // }
+    for (let i = 0; i < PredatorArr.length; i++) {
+        PredatorArr[i].eat()
+    }
     // for (let i = 0; i < EaterArr.length; i++) {
     //     EaterArr[i].eat()
     // }

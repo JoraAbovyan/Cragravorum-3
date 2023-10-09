@@ -1,11 +1,6 @@
-class Eater {
-    constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.energy = 8;
-        this.index = index;
-        this.directions = [];
-    }
+let LivingCreature = require("./LivingCreature");
+module.exports = class Eater extends LivingCreature {
+
     getNewCoordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -18,26 +13,17 @@ class Eater {
             [this.x + 1, this.y + 1]
         ];
     }
+
     chooseCell(character) {
-        this.getNewCoordinates()
-        let found = [];
-        for (let i in this.directions) {
-            let x = this.directions[i][0];
-            let y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        this.getNewCoordinates();
+        return super.chooseCell(character);
     }
     mul() {
         let newCell = random(this.chooseCell(4));
 
         if (newCell) {
 
-            let newEater = new Eater (newCell[0], newCell[1], this.index);
+            let newEater = new Eater(newCell[0], newCell[1], this.index);
 
             EaterArr.push(newEater);
 
@@ -68,7 +54,7 @@ class Eater {
             this.x = newX;
             this.y = newY;
             this.energy++;
-            for (let i in PredatorArr) {      
+            for (let i in PredatorArr) {
                 if (PredatorArr[i].x == newX && PredatorArr[i].y == newY) {
                     PredatorArr.splice(i, 1);
                     break;
@@ -84,7 +70,7 @@ class Eater {
                 this.die();
             }
         }
-        
+
     }
 
     die() {

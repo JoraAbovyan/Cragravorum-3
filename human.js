@@ -1,11 +1,6 @@
-class Human {
-    constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.energy = 5;
-        this.index = index;
-        this.directions = [];
-    }
+let LivingCreature = require("./LivingCreature");
+module.exports = class Human extends LivingCreature {
+
     getNewCoordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -19,18 +14,8 @@ class Human {
         ];
     }
     chooseCell(character) {
-        this.getNewCoordinates()
-        let found = [];
-        for (let i in this.directions) {
-            let x = this.directions[i][0];
-            let y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        this.getNewCoordinates();
+        return super.chooseCell(character);
     }
     mul() {
         let newCell = random(this.chooseCell(5));
@@ -68,7 +53,7 @@ class Human {
             this.x = newX;
             this.y = newY;
             this.energy++;
-            for (let i in EaterArr) {      
+            for (let i in EaterArr) {
                 if (EaterArr[i].x == newX && EaterArr[i].y == newY) {
                     EaterArr.splice(i, 1);
                     break;
@@ -84,7 +69,7 @@ class Human {
                 this.die();
             }
         }
-        
+
     }
 
     die() {

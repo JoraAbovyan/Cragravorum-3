@@ -1,5 +1,10 @@
 let LivingCreature = require("./LivingCreature");
+let random = require("./random");
 module.exports = class Eater extends LivingCreature {
+    constructor(x, y , index){
+    super(x, y, index);
+    this.energy = 7;
+}
 
     getNewCoordinates() {
         this.directions = [

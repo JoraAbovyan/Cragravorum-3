@@ -1,4 +1,5 @@
 var express = require("express");
+let random = require("./random");
 var app = express();
 
 app.use(express.static("../client"));
@@ -21,20 +22,23 @@ let GrassEater = require("./grasseater");
 let Predator = require("./predator");
 let Eater = require("./eater");
 let Human = require("./human");
+let Infection = require("./infection");
 
-var matrix = [];
-let side = 20
 
-let GrassArr = []
-let GrassEaterArr = []
-let PredatorArr = []
-let EaterArr = []
-let HumanArr = []
-const sideCount = 16;
+
+
+GrassArr = []
+GrassEaterArr = []
+PredatorArr = []
+EaterArr = []
+HumanArr = []
+InfectionArr = []
+sideCount = 16;
 
 
 
 function matrixG(a) {
+    let matrix = []
     for (let i = 0; i < a; i++) {
         matrix.push([])
         for (let j = 0; j < a; j++) {
@@ -42,13 +46,16 @@ function matrixG(a) {
 
         }
     }
+
+return matrix
 }
 
-function Generation(count, character) {
+
+function Generation(count, character, matrix) {
     let p = 0;
     while (p < count) {
-        let k = Math.floor(random(0, sideCount))
-        let l = Math.floor(random(0, sideCount))
+        let k = Math.floor(random(sideCount))
+        let l = Math.floor(random(sideCount))
         if (matrix[k][l] == 0) {
             matrix[k][l] = character
         }
@@ -56,14 +63,10 @@ function Generation(count, character) {
     }
 }
 
-matrixG(sideCount)
-Generation(30, 1);
-Generation(10, 2);
-Generation(7, 3);
-Generation(10, 4);
-Generation(10, 5);
+
 
 function createOBJ(){
+
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
@@ -91,11 +94,24 @@ function createOBJ(){
                 HumanArr.push(Humanobj)
 
             }
+            if (matrix[y][x] == 6) {
+                let Infectionobj = new Infection(x, y, 6)
+                InfetionArr.push(Infectionobj)
+
+            }
         }
 
     }
 }
 
+matrix = matrixG(sideCount);
+Generation(30, 1, matrix);
+Generation(10, 2, matrix);
+Generation(7, 3, matrix);
+Generation(10, 4, matrix);
+Generation(10, 5, matrix);
+
+createOBJ();
 
 function start(){
     for (let i = 0; i < GrassArr.length; i++) {
@@ -113,18 +129,18 @@ function start(){
     for (let i = 0; i < HumanArr.length; i++) {
         HumanArr[i].eat()
     }
+
+    
+    io.sockets.emit("Mymatrix", matrix);
 }
 
 
+setInterval(start,1000)
+
 io.on('connection', function (socket) {
-   
-      socket.emit("Mymatrix", matrix);
-    // socket.on("send message", function (data) {
-    //     messages.push(data);
-    //     io.sockets.emit("display message", data);
-    // });
- });
- 
+    socket.emit("Mymatrix", matrix);
+
+});
     
  
  

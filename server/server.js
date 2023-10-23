@@ -1,5 +1,6 @@
 var express = require("express");
 let random = require("./random");
+var fs = require("fs");
 var app = express();
 
 app.use(express.static("../client"));
@@ -8,11 +9,11 @@ var server = require('http').createServer(app); // add
 var io = require('socket.io')(server); // add
 
 app.get("/", function (req, res) {
-res.redirect("index.html");
+    res.redirect("index.html");
 });
 
 server.listen(3000, function () { // add
-console.log("Example is running on port 3000");
+    console.log("Example is running on port 3000");
 });
 
 ///////////
@@ -33,6 +34,8 @@ PredatorArr = []
 EaterArr = []
 HumanArr = []
 InfectionArr = []
+
+
 sideCount = 16;
 
 
@@ -47,7 +50,7 @@ function matrixG(a) {
         }
     }
 
-return matrix
+    return matrix
 }
 
 
@@ -65,13 +68,14 @@ function Generation(count, character, matrix) {
 
 
 
-function createOBJ(){
+function createOBJ() {
 
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
                 let grassobj = new Grass(x, y, 1)
                 GrassArr.push(grassobj)
+
 
             }
             if (matrix[y][x] == 2) {
@@ -99,6 +103,7 @@ function createOBJ(){
                 InfetionArr.push(Infectionobj)
 
             }
+
         }
 
     }
@@ -113,7 +118,7 @@ Generation(10, 5, matrix);
 
 createOBJ();
 
-function start(){
+function start() {
     for (let i = 0; i < GrassArr.length; i++) {
         GrassArr[i].mull()
     }
@@ -129,20 +134,40 @@ function start(){
     for (let i = 0; i < HumanArr.length; i++) {
         HumanArr[i].eat()
     }
-
-    
+    stat = {
+        "Grass": GrassArr.length,
+        "Grasseater": GrassEaterArr.length,
+        "Predator": PredatorArr.length,
+        "Eater": EaterArr.length,
+        "Human": Human.length,
+        "Infection" : InfectionArr.length
+    }
+    statistic = JSON.stringify(stat);
+    fs.writeFileSync("Stat.json", statistic);
+ 
     io.sockets.emit("Mymatrix", matrix);
 }
 
 
-setInterval(start,1000)
+
+setInterval(infoSend,3000)
+
+function infoSend(){
+  var info =   fs.readFileSync("Stat.json").toString();
+    io.sockets.emit("Arrlengths",stat);
+  
+}
+
+
+setInterval(start, 1000)
+
+
 
 io.on('connection', function (socket) {
     socket.emit("Mymatrix", matrix);
 
 });
-    
- 
- 
 
- 
+
+
+

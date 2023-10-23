@@ -1,3 +1,6 @@
+let grassStat = document.getElementById("grass")
+
+
 var socket = io();
 
 let erkarutyun = 400
@@ -10,9 +13,18 @@ function setup() {
 }
 
 socket.on('Mymatrix', mydraw);
+socket.on("Arrlengths", statistic);
+
+function statistic (stat){
+
+    // grassStat.innerHTML = JSON.parse(stat).grass
+   
+    
+
+}
 
 function mydraw(matrix) {
-console.log(matrix);
+// console.log(matrix);
 
 
     for (let y = 0; y < matrix.length; y++) {
@@ -37,15 +49,13 @@ console.log(matrix);
             else {
                 fill("gray")   
             }
-            //rect(50,50,200,200)
-            console.log(erkarutyun, (erkarutyun / matrix.length) * y)
+            // console.log(erkarutyun, (erkarutyun / matrix.length) * y)
            rect((erkarutyun / matrix.length)* x, (erkarutyun / matrix.length) * y, erkarutyun / matrix.length, erkarutyun / matrix.length)
         }
     }
+
 }
 
 
-// function handleMatrix(info){
-// console.log(info);
 
-// }
+

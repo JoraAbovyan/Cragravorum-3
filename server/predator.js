@@ -58,7 +58,7 @@ module.exports = class Predator extends LivingCreature {
             this.energy++;
             for (let i in GrassEaterArr) {
                 if (GrassEaterArr[i].x == newX && GrassEaterArr[i].y == newY) {
-                    GrassEaterArr.splice(i, 1);
+                    GrassEaterArr.splice(i, 2);
                     break;
                 }
             }

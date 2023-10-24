@@ -32,7 +32,7 @@ module.exports = class Eater extends LivingCreature {
 
             EaterArr.push(newEater);
 
-            matrix[newCell[1]][newCell[0]] = 3;
+            matrix[newCell[1]][newCell[0]] = 4;
         }
     }
     move() {
@@ -61,11 +61,11 @@ module.exports = class Eater extends LivingCreature {
             this.energy++;
             for (let i in PredatorArr) {
                 if (PredatorArr[i].x == newX && PredatorArr[i].y == newY) {
-                    PredatorArr.splice(i, 1);
+                    PredatorArr.splice(i, 2);
                     break;
                 }
             }
-            if (this.energy >= 9) {
+            if (this.energy >= 8) {
                 this.mul();
             }
         } else {

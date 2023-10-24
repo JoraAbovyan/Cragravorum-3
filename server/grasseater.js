@@ -58,7 +58,7 @@ module.exports = class GrassEater extends LivingCreature {
             this.energy++;
             for (let i in GrassArr) {
                 if (GrassArr[i].x == newX && GrassArr[i].y == newY) {
-                    GrassArr.splice(i, 1);
+                    GrassArr.splice(i, 2);
                     break;
                 }
             }

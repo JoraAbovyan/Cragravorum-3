@@ -31,7 +31,7 @@ module.exports = class Human extends LivingCreature {
 
             HumanArr.push(newHuman);
 
-            matrix[newCell[1]][newCell[0]] = 3;
+            matrix[newCell[1]][newCell[0]] = 5;
         }
     }
     move() {
@@ -60,7 +60,7 @@ module.exports = class Human extends LivingCreature {
             this.energy++;
             for (let i in EaterArr) {
                 if (EaterArr[i].x == newX && EaterArr[i].y == newY) {
-                    EaterArr.splice(i, 1);
+                    EaterArr.splice(i, 2);
                     break;
                 }
             }

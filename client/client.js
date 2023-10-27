@@ -12,6 +12,8 @@ function setup() {
 
 socket.on('Mymatrix', mydraw);
 socket.on("Arrlengths", statistic);
+socket.on("Gdays",Gday)
+socket.on("Weather",weather)
 
 let color = ["gray","green", "yellow", "cyan", "red", "blue", "black"]
 
@@ -55,50 +57,31 @@ function statistic (stat){
     
 
 }
-let spring =document.getElementById("spring")
-let summer =document.getElementById("summer")
-let autumn=document.getElementById("autumn")
-let winter =document.getElementById("winter")
+
 let exanak =document.getElementById("exanak")
-function changeSpring(){
-exanak.innerHTML = "Spring"
-}
-function changeSummer(){
-    exanak.innerHTML = "Summer"
-}
-function changeAutumn(){
-    exanak.innerHTML = "Autumn"
-}
-function changeWinter(){
-    exanak.innerHTML = "Winter"
+let days = document.getElementById("day") 
+
+function Gday(count){
+    days.innerHTML = count
 }
 
-spring.addEventListener("click",changeSpring) 
-summer.addEventListener("click",changeSummer) 
-autumn.addEventListener("click",changeAutumn) 
-winter.addEventListener("click",changeWinter) 
+function weather (season){
+         exanak.innerHTML = season;
 
-spring.addEventListener("click", () => {
-    let winter = ["gray", "green", "yellow","cyan", "red", "blue", "black", ]
-    color = winter
-   
-})
-summer.addEventListener("click", () => {
-    let summer = ["gray", "green", "blue ", "#AF4319", "#3F220F", "#4D5061", "black", ]
-    color = summer
-   
-})
-autumn.addEventListener("click", () => {
-    let autumn = ["brown", "yellow", "#124559 ", "magenta", "orange", "purple", "black", ]
-    color = autumn
-   
-})
+        if(season === "Winter"){
+            let winter = ["#acacac", "white", "#537FE7", "#443C68", "#301E67", " #655DBB",]
+            color = winter
+        }else if(season === "Spring"){
+            let spring = ["gray", "green", "yellow","cyan", "red", "blue", "black", ]
+            color = spring  
+        }else if(season === "Summer"){
+        
+            let summer = ["gray", "green", "blue ", "#AF4319", "#3F220F", "#4D5061", "black", ]
+            color = summer
+        }else{
+            let autumn = ["brown", "yellow", "#124559 ", "magenta", "orange", "purple", "black", ]
+            color = autumn
+        }
+}
 
-
-winter.addEventListener("click", () => {
-    let winter = ["#acacac", "white", "#537FE7", "#443C68", "#301E67", " #655DBB",]
-    color = winter
-   
-})
-
-
+ 

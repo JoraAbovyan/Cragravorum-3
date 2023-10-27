@@ -36,7 +36,7 @@ HumanArr = []
 InfectionArr = []
 
 
-sideCount = 16;
+sideCount = 20;
 
 
 
@@ -118,6 +118,7 @@ Generation(10, 5, matrix);
 
 createOBJ();
 
+
 function start() {
     for (let i = 0; i < GrassArr.length; i++) {
         GrassArr[i].mull()
@@ -134,28 +135,39 @@ function start() {
     for (let i = 0; i < HumanArr.length; i++) {
         HumanArr[i].eat()
     }
+    for (let i = 0; i < HumanArr.length; i++) {
+        InfectionArr[i].eat()
+        // InfectionArr[i].eatGE()
+        // InfectionArr[i].eatP()
+    }
     stat = {
         "Grass": GrassArr.length,
         "Grasseater": GrassEaterArr.length,
         "Predator": PredatorArr.length,
         "Eater": EaterArr.length,
         "Human": Human.length,
-        "Infection" : InfectionArr.length
+        "Infection": InfectionArr.length
     }
     statistic = JSON.stringify(stat);
     fs.writeFileSync("Stat.json", statistic);
- 
+
+   
+    
+    
     io.sockets.emit("Mymatrix", matrix);
+    io.sockets.emit("daycount", count )
+    
 }
 
 
 
-setInterval(infoSend,3000)
 
-function infoSend(){
-  var info =   fs.readFileSync("Stat.json").toString();
-    io.sockets.emit("Arrlengths",stat);
-  
+setInterval(infoSend, 3000)
+
+function infoSend() {
+    var info = fs.readFileSync("Stat.json").toString();
+    io.sockets.emit("Arrlengths", stat);
+
 }
 
 
@@ -171,3 +183,33 @@ io.on('connection', function (socket) {
 
 
 
+
+count = 1
+function Gday() {
+  
+    if (count <= 365) {
+        count++;
+    } else {
+        count = 1;
+    }
+    
+    if( count <= 59){
+        io.sockets.emit("Weather","Winter")
+    }
+    else if(count <= 152){
+        io.sockets.emit("Weather", "Spring")
+    } else if(count <= 244){
+        io.sockets.emit("Weather","Summer")
+    }else if(count <= 335){
+        Generation(8, 6, matrix);
+        io.sockets.emit("Weather","Autumn")
+    }else{
+        io.sockets.emit("Weather","Winter")
+    }
+
+
+
+    io.sockets.emit("Gdays",count)
+    }
+
+setInterval(Gday,100)

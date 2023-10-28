@@ -104,6 +104,7 @@ function createOBJ() {
 
             }
 
+
         }
 
     }
@@ -135,28 +136,28 @@ function start() {
     for (let i = 0; i < HumanArr.length; i++) {
         HumanArr[i].eat()
     }
-    for (let i = 0; i < HumanArr.length; i++) {
+    for (let i = 0; i < InfectionArr.length; i++) {
         InfectionArr[i].eat()
-        // InfectionArr[i].eatGE()
-        // InfectionArr[i].eatP()
+        InfectionArr[i].eatGE()
     }
+
     stat = {
         "Grass": GrassArr.length,
         "Grasseater": GrassEaterArr.length,
         "Predator": PredatorArr.length,
         "Eater": EaterArr.length,
-        "Human": Human.length,
+        "Human": HumanArr.length,
         "Infection": InfectionArr.length
     }
     statistic = JSON.stringify(stat);
     fs.writeFileSync("Stat.json", statistic);
 
-   
-    
-    
+
+
+
     io.sockets.emit("Mymatrix", matrix);
-    io.sockets.emit("daycount", count )
-    
+    io.sockets.emit("daycount", count)
+
 }
 
 
@@ -186,30 +187,34 @@ io.on('connection', function (socket) {
 
 count = 1
 function Gday() {
-  
+
     if (count <= 365) {
         count++;
     } else {
         count = 1;
     }
-    
-    if( count <= 59){
-        io.sockets.emit("Weather","Winter")
+
+    if (count <= 59) {
+        io.sockets.emit("Weather", "Winter")
+
     }
-    else if(count <= 152){
+    else if (count <= 152) {
         io.sockets.emit("Weather", "Spring")
-    } else if(count <= 244){
-        io.sockets.emit("Weather","Summer")
-    }else if(count <= 335){
+    } else if (count <= 244) {
+        io.sockets.emit("Weather", "Summer")
+    } else if (count <= 335) {
         Generation(8, 6, matrix);
-        io.sockets.emit("Weather","Autumn")
-    }else{
-        io.sockets.emit("Weather","Winter")
-    }
+        io.sockets.emit("Weather", "Autumn")
+    } else {
+        for (let i = 0; i < InfectionArr.length; i++) {
+            InfectionArr[i].die()
+        }
+             io.sockets.emit("Weather", "Winter")
+            }
 
 
 
-    io.sockets.emit("Gdays",count)
-    }
+            io.sockets.emit("Gdays", count)
+        }
 
-setInterval(Gday,100)
+        setInterval(Gday, 100)

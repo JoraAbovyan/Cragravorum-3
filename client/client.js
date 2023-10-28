@@ -54,6 +54,8 @@ function statistic (stat){
     EaterStat.innerHTML =stat.Eater
     let HumanStat = document.getElementById("human")
     HumanStat.innerHTML =stat.Human
+    let InfectionStat = document.getElementById("infection")
+    InfectionStat.innerHTML =stat.Infection
     
 
 }
@@ -69,17 +71,17 @@ function weather (season){
          exanak.innerHTML = season;
 
         if(season === "Winter"){
-            let winter = ["#acacac", "white", "#537FE7", "#443C68", "#301E67", " #655DBB",]
+            let winter = ["#acacac", "white", "#537FE7", "#443C68", "#301E67", " #655DBB","black"]
             color = winter
         }else if(season === "Spring"){
-            let spring = ["gray", "green", "yellow","cyan", "red", "blue", "black", ]
+            let spring = ["gray", "green", "yellow","cyan", "red", "blue", "black" ]
             color = spring  
         }else if(season === "Summer"){
         
-            let summer = ["gray", "green", "blue ", "#AF4319", "#3F220F", "#4D5061", "black", ]
+            let summer = ["gray", "green", "blue ", "#AF4319", "#3F220F", "#4D5061", "black" ]
             color = summer
         }else{
-            let autumn = ["brown", "yellow", "#124559 ", "magenta", "orange", "purple", "black", ]
+            let autumn = ["brown", "yellow", "#124559 ", "magenta", "orange", "purple", "black" ]
             color = autumn
         }
 }

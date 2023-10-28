@@ -73,64 +73,34 @@ module.exports = class Infection extends LivingCreature {
             }
         }
     }
-    // eatGE() {
-    //     let grassCells = this.chooseCell(2);
-    //     let newCell = grassCells[Math.floor(Math.random() * grassCells.length)];
-    //     if (newCell) {
-    //         let newX = newCell[0];
-    //         let newY = newCell[1];
-    //         matrix[newY][newX] = 6;
-    //         matrix[this.y][this.x] = 0;
-    //         this.x = newX;
-    //         this.y = newY;
-    //         this.energy++;
-    //         for (let i in GrassEaterArr) {
-    //             if (GrassEaterArr[i].x == newX && GrassEaterArr[i].y == newY) {
-    //                 GrassEaterArr.splice(i, 2);
-    //                 break;
-    //             }
-    //         }
-    //         if (this.energy >= 9) {
-    //             this.mul();
-    //         }
-    //     } else {
-    //         this.move();
-    //         this.energy--;
-    //         if (this.energy <= 0) {
-    //             this.die();
-    //         }
-    //     }
-    // } 
-    // eatP() {
-
-    //     let grassCells = this.chooseCell(3);
-    //     let newCell = grassCells[Math.floor(Math.random() * grassCells.length)];
-    //     if (newCell) {
-    //         let newX = newCell[0];
-    //         let newY = newCell[1];
-    //         matrix[newY][newX] = 6;
-    //         matrix[this.y][this.x] = 0;
-    //         this.x = newX;
-    //         this.y = newY;
-    //         this.energy++;
-    //         for (let i in PredatorArr) {
-    //             if (PredatorArr[i].x == newX && PredatorArr[i].y == newY) {
-    //                 PredatorArr.splice(i, 2);
-    //                 break;
-    //             }
-    //         }
-    //         if (this.energy >= 8) {
-    //             this.mul();
-    //         }
-    //     } else {
-    //         this.move();
-    //         this.energy--;
-    //         if (this.energy <= 0) {
-    //             this.die();
-    //         }
-    //     }
-
-    // }  
+    eatGE() {
+        let grassCells = this.chooseCell(2);
+        let newCell = grassCells[Math.floor(Math.random() * grassCells.length)];
+        if (newCell) {
+            let newX = newCell[0];
+            let newY = newCell[1];
+            matrix[newY][newX] = 6;
+            matrix[this.y][this.x] = 0;
+            this.x = newX;
+            this.y = newY;
+            this.energy++;
+            for (let i in GrassArr) {
+                if (GrassArr[i].x == newX && GrassArr[i].y == newY) {
+                    GrassArr.splice(i, 2);
+                    break;
+                }
+            }
+            if (this.energy >= 9) {
+                this.mul();
+            }
+        } else {
+            this.move();
+            this.energy--;
+            if (this.energy <= 0) {
+                this.die();
+            }
+        }
+    }
     die() {
         matrix[this.y][this.x] = 0;
         for (let i in InfectionArr) {
